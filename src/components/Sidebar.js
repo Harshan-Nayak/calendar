@@ -94,8 +94,8 @@ const Sidebar = () => {
         <div className="user-profile">
           <img src="https://wallpaperaccess.com/full/2562964.jpg" alt="User" className="user-avatar" />
           <div className="user-info">
-            <span className="user-name">Pawan Kalyan</span>
-            <span className="user-email">pawan@google.com</span>
+            <span className="user-name">Naveen Kumar</span>
+            <span className="user-email">naveen@google.com</span>
           </div>
           <SettingsIcon />
         </div>
