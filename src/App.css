@@ -1,38 +1,104 @@
+/* General body styles - ensure these are at the top or in index.css */
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+  color: #343a40;
+  overflow-x: hidden; /* Prevent horizontal scroll if sidebar causes issues initially */
+}
+
 .App {
-  text-align: center;
+  display: flex; /* Main layout: Sidebar | Main Content Area */
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Background for the area outside calendar/sidebar */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Sidebar is handled by Sidebar.css (position: fixed) */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.main-content-area {
+  margin-left: 260px; /* Same as sidebar width to make space for it */
+  flex-grow: 1; /* Takes up remaining space */
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 260px); /* Ensure it doesn't overflow */
+  height: 100vh; /* Full viewport height for this area */
+  overflow-y: hidden; /* Prevent this area from scrolling, calendar itself might scroll if content is too tall */
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 15px 30px;
+  color: #212529;
+  border-bottom: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); /* Softer shadow */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px; /* Fixed header height */
+  box-sizing: border-box;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 1.6em; /* Slightly adjusted */
+  font-weight: 600;
+}
+
+.file-upload-container {
+  /* margin-left: auto; */ /* Already handled by flex justify-content on App-header */
+  display: flex;
+  align-items: center;
+}
+
+.file-upload-label {
+  background-color: #6e54ff; /* Match sidebar accent */
+  color: white;
+  padding: 8px 14px; /* Adjusted padding */
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85em; /* Adjusted size */
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  /* margin-right: 10px; */ /* Removed, let header spacing handle it */
+}
+
+.file-upload-label:hover {
+  background-color: #5a43d1; /* Darker shade of accent */
+}
+
+.file-upload-input {
+  display: none;
+}
+
+.calendar-main-section {
+  flex-grow: 1; /* Allows calendar to fill available vertical space */
+  padding: 20px; /* Padding around the calendar */
+  overflow-y: auto; /* Allow scrolling for this section if calendar is taller than viewport */
+  /* The goal is for the calendar itself to fit, so this is a fallback */
+  display: flex; /* To center calendar if it's not max-width */
+  justify-content: center; /* Center calendar component */
+  align-items: flex-start; /* Align calendar to top */
+  box-sizing: border-box;
+  height: calc(100vh - 70px); /* Full height minus header */
+}
+
+/* Ensure Calendar component itself doesn't cause outer scroll */
+/* This might need to be in Calendar.css if more specific targeting is needed */
+.calendar-container {
+  width: 100%; /* Take full width of its parent */
+  max-width: 1200px; /* Adjust as needed, can be larger with sidebar */
+  /* min-height: calc(100vh - 70px - 40px); */ /* Header height and padding */
+  /* The above min-height might be too aggressive, let flexbox handle height */
+  height: 100%; /* Try to make calendar take full height of its container */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.calendar-grid {
+  flex-grow: 1; /* Make grid take available space */
+  /* Other styles remain in Calendar.css */
 }

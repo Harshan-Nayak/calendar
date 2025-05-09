@@ -1,0 +1,218 @@
+/* Inspired by professional calendar UIs */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f8f9fa; /* Light gray background for the page */
+  margin: 0;
+  color: #343a40; /* Default text color */
+}
+
+.calendar-container {
+  width: 100%;
+  /* max-width: 1100px; /* Let App.css handle max-width */
+  /* margin: 40px auto; /* Let App.css handle margin/centering */
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+  overflow: hidden; /* Important for border-radius and children */
+  display: flex; /* Added for vertical flex layout */
+  flex-direction: column; /* Header, then grid */
+  height: 100%; /* Take full height of parent (.calendar-main-section) */
+  box-sizing: border-box;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px; /* Slightly reduced padding */
+  background-color: #fff;
+  border-bottom: 1px solid #e9ecef;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 1.6em; /* Adjusted size */
+  font-weight: 600;
+  color: #212529;
+}
+
+.calendar-header button {
+  background-color: transparent;
+  color: #495057;
+  border: 1px solid #ced4da;
+  padding: 8px 12px; /* Adjusted padding */
+  border-radius: 6px; /* Adjusted radius */
+  cursor: pointer;
+  font-size: 1em; /* Adjusted size */
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-header button:hover {
+  background-color: #e9ecef;
+  color: #007bff;
+  border-color: #adb5bd;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  /* Dynamically set rows to fill height. Assuming 5 or 6 weeks.
+     A common approach is to let the parent (.calendar-container) be flex
+     and this grid grow. The number of rows is implicit by the number of day cells.
+     We need to make sure the day cells themselves can expand.
+  */
+  grid-auto-rows: minmax(0, 1fr); /* Allow rows to expand equally */
+  gap: 0;
+  border-top: 1px solid #e9ecef;
+  flex-grow: 1; /* Make grid take available vertical space */
+  overflow: hidden; /* Prevent grid itself from scrolling */
+}
+
+.calendar-day-name {
+  text-align: center;
+  padding: 10px 0; /* Adjusted padding */
+  font-weight: 500;
+  background-color: #f8f9fa;
+  color: #6c757d;
+  font-size: 0.8em; /* Adjusted size */
+  text-transform: uppercase;
+  border-bottom: 1px solid #e9ecef;
+  display: flex; /* For centering */
+  align-items: center; /* For centering */
+  justify-content: center; /* For centering */
+}
+
+.calendar-day-name:not(:last-child) {
+  border-right: 1px solid #e9ecef;
+}
+
+.calendar-day {
+  background-color: #fff;
+  /* min-height: 100px; /* Removed min-height, let grid row height dictate */
+  padding: 8px; /* Adjusted padding */
+  position: relative;
+  font-size: 0.9em;
+  border-bottom: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+  transition: background-color 0.2s ease;
+  display: flex; /* Added for internal layout */
+  flex-direction: column; /* Day number then events */
+  overflow: hidden; /* Prevent content from breaking cell boundaries */
+}
+
+.calendar-day:nth-child(7n) {
+  border-right: none;
+}
+/* Remove bottom border from the last row of days.
+   This is tricky with pure CSS if the number of rows isn't fixed.
+   If JS adds 35 or 42 cells, we can target the last 7.
+   For now, we'll assume the grid structure handles this visually.
+   If not, JS might be needed to add a class to the last row of cells.
+*/
+.calendar-day:nth-last-child(-n+7) { /* Targets last 7 cells, assuming max 6 weeks */
+    /* border-bottom: none; /* This might remove too many if only 5 weeks */
+}
+
+
+.calendar-day:hover {
+  background-color: #f1f3f5;
+}
+
+.calendar-day .day-number {
+  font-weight: 500;
+  display: block; /* Or inline-block if on same line as other things */
+  margin-bottom: 6px; /* Adjusted margin */
+  color: #495057;
+  font-size: 0.9em; /* Adjusted size */
+  text-align: right;
+  flex-shrink: 0; /* Prevent day number from shrinking */
+}
+
+.calendar-day.disabled .day-number {
+  color: #adb5bd;
+}
+.calendar-day.disabled {
+  background-color: #f8f9fa;
+}
+
+.calendar-day.today .day-number {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 26px; /* Adjusted size */
+  height: 26px; /* Adjusted size */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  float: right; /* Keep it to the right */
+  line-height: 26px; /* Ensure number is centered */
+}
+.calendar-day.today {
+   background-color: #e6f7ff;
+}
+
+.events-on-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Adjusted gap */
+  margin-top: 4px; /* Adjusted margin */
+  overflow-y: auto; /* Allow scrolling for events within a day cell if they overflow */
+  flex-grow: 1; /* Allow this area to take up space */
+  padding-right: 2px; /* Small padding to avoid scrollbar overlapping content */
+}
+
+/* Styles for scrollbar in events-on-day */
+.events-on-day::-webkit-scrollbar {
+  width: 5px;
+}
+.events-on-day::-webkit-scrollbar-thumb {
+  background-color: #ced4da;
+  border-radius: 3px;
+}
+.events-on-day::-webkit-scrollbar-track {
+  background-color: transparent; /* Or #f1f3f5 for slight contrast */
+}
+
+
+.event-item {
+  color: white;
+  padding: 5px 7px; /* Adjusted padding */
+  border-radius: 5px; /* Adjusted radius */
+  font-size: 0.75em; /* Adjusted size */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0; /* Prevent events from shrinking excessively */
+}
+
+.event-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+/* Corrected nesting for these styles */
+.event-item .event-time {
+  font-weight: 600;
+  margin-right: 5px; /* Adjusted margin */
+  opacity: 0.9;
+}
+
+.event-item.conflicting {
+  border: 1.5px dashed #d9363e; /* Adjusted border */
+  /* box-shadow: 0 0 4px rgba(217, 54, 62, 0.4); */ /* Optional: softer glow */
+}
+
+.event-item .event-duration {
+  font-size: 0.9em;
+  opacity: 0.75; /* Adjusted opacity */
+  margin-left: 3px; /* Adjusted margin */
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Daily Standup",
+    "date": "2025-05-10",
+    "startTime": "09:00:00",
+    "endTime": "09:30:00"
+  },
+  {
+    "title": "Team Meeting",
+    "date": "2025-05-10",
+    "startTime": "09:15:00",
+    "endTime": "10:15:00"
+  },
+  {
+    "title": "Client Call",
+    "date": "2025-05-10",
+    "startTime": "10:00:00",
+    "endTime": "11:00:00"
+  },
+  {
+    "title": "Strategy Session",
+    "date": "2025-05-10",
+    "startTime": "10:45:00",
+    "endTime": "11:45:00"
+  },
+  {
+    "title": "Lunch Break",
+    "date": "2025-05-10",
+    "startTime": "12:00:00",
+    "endTime": "13:00:00"
+  },
+  {
+    "title": "Project Work",
+    "date": "2025-05-11",
+    "startTime": "10:00:00",
+    "endTime": "12:00:00"
+  },
+  {
+    "title": "Weekly Review",
+    "date": "2025-05-12",
+    "startTime": "14:00:00",
+    "endTime": "15:30:00"
+  },
+  {
+    "title": "Planning Session",
+    "date": "2025-05-12",
+    "startTime": "15:00:00",
+    "endTime": "16:00:00"
+  },
+  {
+    "title": "Quick Sync",
+    "date": "2025-05-12",
+    "startTime": "15:15:00",
+    "endTime": "15:45:00"
+  }
+]
